@@ -1,0 +1,39 @@
+{% load static %}
+<div class="music-player" data-game="music-player">
+  <script type="application/json" class="music-tracks">
+    [
+      {"title": "Море Не Волнуется О Нас", "artist": "Loqiemean", "src": "{% static 'audio/music/Loqiemean - Море Не Волнуется О Нас.mp3' %}"},
+      {"title": "Удочка для охоты",         "artist": "Loqiemean", "src": "{% static 'audio/music/Loqiemean - Удочка для охоты.mp3' %}"},
+      {"title": "Замок",                     "artist": "Thomas Mraz","src": "{% static 'audio/music/Thomas Mraz - Замок.mp3' %}"},
+      {"title": "Новый Баланс",              "artist": "Thomas Mraz","src": "{% static 'audio/music/Thomas Mraz - Новый Баланс.mp3' %}"}
+    ]
+  </script>
+
+  <header class="music-display">
+    <div class="music-track-info">
+      <div class="music-title" data-music-title>—</div>
+      <div class="music-artist" data-music-artist>выбери трек</div>
+    </div>
+    <div class="music-time">
+      <span data-music-current>0:00</span> / <span data-music-duration>0:00</span>
+    </div>
+  </header>
+
+  <div class="music-progress" data-music-progress>
+    <span data-music-progress-fill></span>
+  </div>
+
+  <div class="music-controls">
+    <button type="button" data-music-prev title="Назад">⏮</button>
+    <button type="button" data-music-play class="primary" title="Воспроизвести">▶</button>
+    <button type="button" data-music-next title="Вперёд">⏭</button>
+    <div class="music-volume">
+      <span>VOL</span>
+      <input type="range" min="0" max="100" value="60" data-music-volume>
+    </div>
+  </div>
+
+  <ol class="music-tracklist" data-music-list></ol>
+
+  <audio data-music-audio preload="metadata"></audio>
+</div>

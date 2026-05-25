@@ -1,0 +1,49 @@
+<div class="antivirus-game" x-data="antivirusGame()" x-init="init()" data-game="antivirus">
+  <div class="av-brief">
+    <p><strong>AVSCAN.exe</strong> — диск повреждён. Среди файлов прячутся вирусы, замаскированные под системные.</p>
+    <ol>
+      <li>Нажми <b>Сканировать</b>. Каждый файл получит метку: <span class="av-tag suspicious">ПОДОЗРИТЕЛЬНЫЙ</span> или <span class="av-tag safe">в норме</span>.</li>
+      <li>Сканер ошибается ~15% времени, поэтому <u>читай имя файла</u>: настоящие вирусы маскируются (нули вместо O, двойные расширения, <code>.scr</code>).</li>
+      <li>Помеченные тобой в <b>карантин</b> файлы будут удалены, остальные — оставлены.</li>
+      <li>Когда уверена — нажми <b>Подтвердить</b>.</li>
+    </ol>
+    <p class="av-note"><span class="glitch-text">не удали системные файлы</span> — это сломает систему.</p>
+  </div>
+
+  <div class="scan-meter" :data-label="meterLabel">
+    <span :style="`width: ${scanProgress}%`"></span>
+  </div>
+
+  <div class="scan-controls">
+    <button type="button" @click="rescan()" :disabled="scanning">Сканировать</button>
+    <button type="button" @click="finalize()" :disabled="scanning || finalized">Подтвердить</button>
+    <button type="button" @click="restart()">Новая сессия</button>
+    <div class="av-counter">
+      угрозы: <strong x-text="threatsLeft"></strong> &nbsp;/&nbsp; в карантине: <strong x-text="quarantined"></strong>
+    </div>
+  </div>
+
+  <div class="av-list">
+    <template x-for="file in files" :key="file.id">
+      <div class="av-row"
+           :class="{
+             suspicious: file.scannedAs === 'suspicious' && !file.deleted,
+             safe: file.scannedAs === 'safe' && !file.deleted,
+             deleted: file.deleted
+           }">
+        <span class="mini-icon" :class="file.iconKind"></span>
+        <span class="av-name" x-text="file.name"></span>
+        <span class="av-status" x-text="statusLabel(file)"></span>
+        <span>
+          <button type="button"
+                  class="danger"
+                  @click="toggleQuarantine(file)"
+                  :disabled="scanning || finalized"
+                  x-text="file.deleted ? 'Вернуть' : 'В карантин'"></button>
+        </span>
+      </div>
+    </template>
+  </div>
+
+  <footer class="game-message" x-text="message"></footer>
+</div>

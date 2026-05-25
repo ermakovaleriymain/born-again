@@ -1,0 +1,39 @@
+<div class="explorer-maze" x-data="explorerMazeGame()" x-init="init()" data-game="explorer-maze-v2">
+  <div class="address-bar">
+    <template x-for="(crumb, i) in breadcrumbs" :key="i">
+      <span>
+        <span x-text="crumb"></span><span class="breadcrumb-sep" x-show="i < breadcrumbs.length - 1">\</span>
+      </span>
+    </template>
+  </div>
+
+  <div class="maze-toolbar">
+    <button type="button" @click="back()" :disabled="path.length === 0">.. Назад</button>
+    <button type="button" @click="reset()">Сбросить</button>
+    <div class="maze-counter">
+      глубина: <strong x-text="path.length"></strong> · шаги: <strong x-text="steps"></strong>
+    </div>
+  </div>
+
+  <div class="maze-grid">
+    <template x-for="entry in currentEntries" :key="entry.id">
+      <button type="button"
+              class="maze-entry"
+              :class="entry.kind"
+              @click="open(entry)">
+        <span class="maze-glyph" aria-hidden="true"></span>
+        <span x-text="entry.label"></span>
+      </button>
+    </template>
+  </div>
+
+  <div class="maze-modal" x-show="modal.open" x-transition>
+    <header x-text="modal.title"></header>
+    <div class="modal-body" x-html="modal.body"></div>
+    <footer>
+      <button type="button" @click="closeModal()">Закрыть</button>
+    </footer>
+  </div>
+
+  <footer class="game-message" x-text="message"></footer>
+</div>

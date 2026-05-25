@@ -1,0 +1,14 @@
+<button
+  class="desktop-icon desktop-icon--{{ icon.kind }}"
+  style="left: {{ icon.x }}px; top: {{ icon.y }}px;"
+  data-window-id="{{ icon.window }}"
+  data-icon-id="{{ icon.id }}"
+  @dblclick.stop="openWindow('{{ icon.window }}')"
+  @keydown.enter.stop.prevent="openWindow('{{ icon.window }}')"
+  @click.stop="selectIcon('{{ icon.id }}')"
+  :class="{ selected: selectedIcon === '{{ icon.id }}' }"
+  type="button"
+>
+  <span class="icon-glyph" aria-hidden="true"></span>
+  <span class="icon-label">{{ icon.label }}</span>
+</button>

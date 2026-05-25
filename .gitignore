@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+.Python
+
+# Virtual envs
+.venv/
+venv/
+env/
+
+# Django
+*.log
+local_settings.py
+db.sqlite3-journal
+
+# Collected static (built by Vercel)
+staticfiles/
+staticfiles_build/
+
+# IDE / OS
+.idea/
+.vscode/
+.junie/
+.DS_Store
+Thumbs.db
+
+# Vercel
+.vercel/
+
+# Tasks/output buckets (Claude harness)
+/private/tmp/
+
+# Source assets only used as reference — large folder, kept locally
+Прошлый сайт/

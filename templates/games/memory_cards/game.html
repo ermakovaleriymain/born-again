@@ -1,0 +1,24 @@
+{% load static %}
+<div class="memory-cards-game" data-game="memory-cards">
+  <script type="application/json" class="memory-photo-data">
+    [{% for photo in photos %}"{% static photo %}"{% if not forloop.last %},{% endif %}{% endfor %}]
+  </script>
+
+  <div class="memory-toolbar">
+    <div class="memory-counter">
+      <span>Pairs:</span>
+      <strong data-memory-matched>0</strong>
+      <span>/</span>
+      <span data-memory-total>5</span>
+    </div>
+    <div class="memory-counter">
+      <span>Moves:</span>
+      <strong data-memory-moves>0</strong>
+    </div>
+    <button type="button" data-memory-shuffle>Shuffle</button>
+  </div>
+
+  <div class="memory-board" data-memory-board></div>
+
+  <div class="game-message" data-memory-message>Find every matching photo pair.</div>
+</div>

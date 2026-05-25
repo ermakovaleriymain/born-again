@@ -1,0 +1,298 @@
+/* =========================================================
+   BornAgain OS — Cold Industrial Theme
+   Steel grey + electric blue. Surveillance / tension mood.
+   ========================================================= */
+
+:root {
+  /* --- Base palette ---------------------------------------- */
+  --void:           #04070b;
+  --bg:             #0a1018;
+  --bg-soft:        #121a25;
+  --frame:          #1c2735;
+  --frame-light:    #2a3a4d;
+  --frame-edge:     #3f566f;
+  --frame-deep:     #080d14;
+  --inset-shadow:   #050810;
+  --inset-light:    #2f4258;
+
+  /* --- Title bar & focus ---------------------------------- */
+  --titlebar:       #1b2735;
+  --titlebar-hi:    #2c4256;
+  --titlebar-lo:    #0d1622;
+  --titlebar-blur:  #1a2330;
+  --titlebar-text:  #dbe6f0;
+
+  /* --- Text ----------------------------------------------- */
+  --ink:            #b8c5d4;
+  --ink-bright:     #e8eef5;
+  --ink-dim:        #6a7888;
+  --ink-ghost:      #3e4a5a;
+
+  /* --- Accents -------------------------------------------- */
+  --accent:         #4ea8c9;
+  --accent-hot:     #6cc7e6;
+  --accent-deep:    #1d566f;
+  --accent-glow:    rgba(78, 168, 201, 0.55);
+  --warning:        #d0b85a;
+  --ok:             #5cab8a;
+  --ghost-cyan:     #79d4d4;
+  --error:          #c45a6a;
+
+  /* --- Letter paper (warm island inside cold OS) --------- */
+  --letter-bg:      #1a2230;
+  --letter-bg-hi:   #233044;
+  --letter-ink:     #d8d4c8;
+  --letter-ink-dim: #99928a;
+  --letter-edge:    #2c3a4d;
+
+  /* --- Shadows & glows ----------------------------------- */
+  --shadow-deep:    rgba(0, 0, 0, 0.82);
+  --shadow-soft:    rgba(0, 0, 0, 0.5);
+  --shadow-cherry:  rgba(29, 86, 111, 0.4);
+  --glow-focus:     0 0 0 1px var(--accent-glow), 0 12px 38px rgba(0,0,0,0.7), 6px 8px 0 rgba(29, 86, 111, 0.3);
+  --glow-blur:      0 8px 22px rgba(0,0,0,0.55);
+
+  /* --- Layout --------------------------------------------- */
+  --taskbar-h:      36px;
+
+  /* --- Type ----------------------------------------------- */
+  --font-ui:        "MS Sans Serif", Tahoma, "Pixelated MS Sans Serif", Arial, sans-serif;
+  --font-mono:      "Courier New", "Consolas", monospace;
+  --font-display:   "Times New Roman", Georgia, serif;
+
+  /* --- Legacy aliases (kept so old rules don't shatter) -- */
+  --desktop-pink:      var(--accent-hot);
+  --desktop-pink-soft: var(--accent-hot);
+  --cherry:            var(--accent-deep);
+  --cherry-dark:       #0d2a3c;
+  --cherry-hot:        var(--accent);
+  --beige:             var(--letter-ink-dim);
+  --cream:             var(--letter-ink);
+  --win-face:          var(--frame);
+  --win-light:         var(--frame-light);
+  --win-mid:           var(--inset-light);
+  --win-dark:          var(--frame-deep);
+  --muted:             var(--ink-dim);
+  --shadow:            var(--shadow-deep);
+}
+
+* { box-sizing: border-box; }
+
+html, body { width: 100%; height: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-ui);
+  color: var(--ink);
+  background: var(--void);
+  overflow: hidden;
+  cursor: default;
+}
+
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: default; }
+
+::selection {
+  background: var(--accent);
+  color: var(--void);
+}
+
+/* Scrollbars — dark, thin, industrial */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--frame-edge) var(--bg);
+}
+*::-webkit-scrollbar { width: 12px; height: 12px; }
+*::-webkit-scrollbar-track {
+  background: var(--bg);
+  border: 1px solid var(--frame-deep);
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--frame-edge);
+  border: 2px outset var(--frame-light);
+}
+*::-webkit-scrollbar-thumb:hover { background: var(--accent-deep); }
+
+.muted {
+  color: var(--ink-dim);
+  font-size: 12px;
+}
+
+/* =========================================================
+   Ambient overlays — sit above the desktop, below windows.
+   ========================================================= */
+.crt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(180, 220, 240, 0.04) 0,
+      rgba(180, 220, 240, 0.04) 1px,
+      rgba(0, 0, 0, 0.32) 2px,
+      transparent 4px
+    );
+  mix-blend-mode: overlay;
+  opacity: 0.88;
+  animation: crtShimmer 7s steps(40) infinite;
+}
+
+.crt-vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 9001;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center,
+      transparent 30%,
+      rgba(0, 0, 0, 0.55) 78%,
+      rgba(0, 0, 0, 0.96) 100%);
+}
+
+.desktop-noise {
+  position: fixed;
+  inset: 0;
+  z-index: 8999;
+  pointer-events: none;
+  opacity: 0.14;
+  mix-blend-mode: overlay;
+  background-image:
+    radial-gradient(circle at 12% 14%, rgba(180,220,240,0.7) 0 1px, transparent 1px),
+    radial-gradient(circle at 72% 44%, rgba(180,220,240,0.5) 0 1px, transparent 1px),
+    radial-gradient(circle at 38% 82%, rgba(180,220,240,0.5) 0 1px, transparent 1px),
+    radial-gradient(circle at 88% 22%, rgba(180,220,240,0.4) 0 1px, transparent 1px);
+  background-size: 31px 37px, 43px 41px, 53px 59px, 67px 71px;
+  animation: noiseShift 1.2s steps(6) infinite;
+}
+
+/* Horizontal sweep — slow scanning line crossing the screen */
+.crt-sweep {
+  position: fixed;
+  inset: 0;
+  z-index: 9002;
+  pointer-events: none;
+  background: linear-gradient(to bottom,
+    transparent 0%,
+    transparent 48%,
+    rgba(108, 199, 230, 0.06) 49%,
+    rgba(108, 199, 230, 0.18) 50%,
+    rgba(108, 199, 230, 0.06) 51%,
+    transparent 52%,
+    transparent 100%);
+  background-size: 100% 600%;
+  animation: crtSweep 9s linear infinite;
+  mix-blend-mode: screen;
+  opacity: 0.7;
+}
+@keyframes crtSweep {
+  0%   { background-position: 0 -120%; }
+  100% { background-position: 0 220%; }
+}
+
+@keyframes crtShimmer {
+  0%, 90%, 100% { opacity: 0.88; }
+  91% { opacity: 0.4; }
+  92% { opacity: 1; }
+  93% { opacity: 0.6; }
+  94% { opacity: 1; }
+  95% { opacity: 0.75; }
+}
+
+@keyframes noiseShift {
+  0%   { transform: translate(0, 0); }
+  33%  { transform: translate(-2px, 1px); }
+  66%  { transform: translate(1px, -2px); }
+  100% { transform: translate(2px, 2px); }
+}
+
+/* =========================================================
+   Glitch system — more frequent, more variety.
+   Triggered from JS by toggling body classes.
+   ========================================================= */
+
+/* Full-screen aggressive glitch — short bursts (~250ms) */
+body.site-glitching {
+  animation: siteJitter 0.08s steps(2) infinite;
+}
+body.site-glitching::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9500;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(196, 90, 106, 0.25), transparent 22%, rgba(121, 212, 212, 0.22)),
+    repeating-linear-gradient(to bottom,
+      rgba(255,255,255,0.1) 0 2px,
+      rgba(0,0,0,0.28) 2px 5px);
+  mix-blend-mode: screen;
+}
+@keyframes siteJitter {
+  0%   { filter: hue-rotate(0deg)  contrast(1.2); transform: translate(0, 0); }
+  50%  { filter: hue-rotate(-160deg) contrast(1.6) saturate(0.4); transform: translate(4px, -3px); }
+  100% { filter: hue-rotate(60deg) contrast(1.3); transform: translate(-3px, 2px); }
+}
+
+/* Softer screen tear — subtle, used randomly between bursts */
+body.screen-tear::before {
+  content: "";
+  position: fixed;
+  left: 0; right: 0;
+  top: var(--tear-y, 30%);
+  height: 14px;
+  z-index: 9498;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom,
+      transparent, rgba(108,199,230,0.18), rgba(196,90,106,0.18), transparent);
+  transform: translateX(var(--tear-x, 6px));
+  mix-blend-mode: screen;
+}
+
+/* Chromatic aberration pulse — applied to selected element */
+.chromatic {
+  animation: chromaticPulse 0.16s steps(2);
+}
+@keyframes chromaticPulse {
+  0%   { text-shadow: 1px 0 0 var(--ghost-cyan), -1px 0 0 var(--error); filter: none; }
+  50%  { text-shadow: -3px 0 0 var(--ghost-cyan), 3px 0 0 var(--error); filter: blur(0.4px); }
+  100% { text-shadow: 1px 0 0 var(--ghost-cyan), -1px 0 0 var(--error); filter: none; }
+}
+
+/* Reusable text-glitch utility */
+.glitch-text {
+  position: relative;
+  color: var(--accent);
+  text-shadow:
+    1px 0 0 var(--ghost-cyan),
+    -1px 0 0 var(--error);
+  animation: textGlitch 1.6s steps(2) infinite;
+}
+@keyframes textGlitch {
+  0%, 88%, 100% { transform: translateX(0); }
+  90%           { transform: translateX(-2px); opacity: 0.4; }
+  92%           { transform: translateX(2px);  opacity: 1;   text-shadow: 2px 0 0 var(--ghost-cyan), -2px 0 0 var(--error); }
+  94%           { transform: translateX(-1px); opacity: 0.7; }
+}
+
+.dim { opacity: 0.55; }
+
+/* Pulse for unknown / corrupt items */
+@keyframes softPulse {
+  0%, 100% { opacity: 0.85; filter: drop-shadow(0 0 4px var(--accent-glow)); }
+  50%      { opacity: 1;    filter: drop-shadow(0 0 12px var(--accent-glow)); }
+}
+
+/* Random shudder applied to .desktop-icon.shudder via JS */
+.shudder {
+  animation: iconShudder 0.32s steps(3) 1;
+}
+@keyframes iconShudder {
+  0%   { transform: translate(0, 0); filter: none; }
+  20%  { transform: translate(-2px, 1px); filter: hue-rotate(40deg); }
+  50%  { transform: translate(3px, -2px); filter: hue-rotate(-30deg) contrast(1.4); }
+  80%  { transform: translate(-1px, 2px); filter: none; }
+  100% { transform: translate(0, 0); filter: none; }
+}

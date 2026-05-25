@@ -1,0 +1,7 @@
+<aside class="system-popup" :style="`left:${popup.x}px; top:${popup.y}px; z-index:${popup.z}`">
+  <header>
+    <span x-text="popup.title"></span>
+    <button type="button" @click="dismissPopup(popup.id)">×</button>
+  </header>
+  <p x-text="popup.message"></p>
+</aside>

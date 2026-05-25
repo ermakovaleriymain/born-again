@@ -1,0 +1,29 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}BornAgain OS{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+  <link rel="stylesheet" href="{% static 'css/window.css' %}">
+  <link rel="stylesheet" href="{% static 'css/desktop.css' %}">
+  <link rel="stylesheet" href="{% static 'css/games.css' %}">
+  <script src="https://unpkg.com/htmx.org@1.9.12" defer></script>
+  {% block pre_alpine_scripts %}{% endblock %}
+  <script src="https://unpkg.com/alpinejs@3.14.1/dist/cdn.min.js" defer></script>
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  {% block body %}{% endblock %}
+  <script src="{% static 'js/games/file-hunt.js' %}" defer></script>
+  <script src="{% static 'js/games/flappy-bat.js' %}" defer></script>
+  <script src="{% static 'js/games/memory-cards.js' %}" defer></script>
+  <script src="{% static 'js/games/explorer-maze.js' %}" defer></script>
+  <script src="{% static 'js/games/cmd-game.js' %}" defer></script>
+  <script src="{% static 'js/games/antivirus.js' %}" defer></script>
+  <script src="{% static 'js/games/paint-puzzle.js' %}" defer></script>
+  <script src="{% static 'js/games/music-player.js' %}" defer></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

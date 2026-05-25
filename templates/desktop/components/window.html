@@ -1,0 +1,35 @@
+<article
+  class="win98-window"
+  x-show="!win.minimized"
+  x-transition:enter="window-enter"
+  :class="{ focused: focusedWindow === win.id, maximized: win.maximized }"
+  :style="windowStyle(win)"
+  @pointerdown.stop="focusWindow(win.id)"
+>
+  <header class="win-titlebar" @pointerdown.stop="startDrag($event, win)" @dblclick="if (!$event.target.closest('.win-buttons')) toggleMaximize(win.id)">
+    <div class="win-title">
+      <span class="win-title-icon"></span>
+      <span x-text="win.title"></span>
+    </div>
+    <div class="win-buttons" @pointerdown.stop @click.stop @dblclick.stop>
+      <button class="win-btn" type="button" @pointerdown.stop @click.stop="minimizeWindow(win.id)" @dblclick.stop title="Minimize">_</button>
+      <button class="win-btn" type="button" @pointerdown.stop @click.stop="toggleMaximize(win.id)" @dblclick.stop title="Maximize">□</button>
+      <button class="win-btn win-btn-close" type="button" @pointerdown.stop @click.stop="closeWindow(win.id)" @dblclick.stop title="Close">×</button>
+    </div>
+  </header>
+  <div class="win-toolbar" x-show="win.toolbar !== false">
+    <button type="button">File</button>
+    <button type="button">Edit</button>
+    <button type="button">View</button>
+    <button type="button">Help</button>
+  </div>
+  <section class="win-content">
+    <div
+      class="window-loader"
+      :hx-get="win.load === 'htmx' ? win.url : '/windows/' + win.id + '/'"
+      hx-trigger="load"
+      hx-swap="innerHTML"
+      x-init="$nextTick(() => window.htmx && htmx.process($el))"
+    ></div>
+  </section>
+</article>

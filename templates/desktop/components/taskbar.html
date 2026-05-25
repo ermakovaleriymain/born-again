@@ -1,0 +1,22 @@
+<footer class="taskbar">
+  <button class="start-button" type="button" @click="openWindow('readme')">
+    <span class="start-logo"></span>
+    Start
+  </button>
+  <div class="taskbar-items">
+    <template x-for="win in windows" :key="`task-${win.id}`">
+      <button
+        class="taskbar-item"
+        type="button"
+        :class="{ active: focusedWindow === win.id && !win.minimized }"
+        @click="restoreOrFocus(win.id)"
+      >
+        <span x-text="win.title"></span>
+      </button>
+    </template>
+  </div>
+  <div class="tray">
+    <span class="tray-light"></span>
+    <span x-text="clock"></span>
+  </div>
+</footer>

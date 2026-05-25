@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}BornAgain OS Desktop{% endblock %}
+
+{% block pre_alpine_scripts %}
+{{ windows|json_script:"window-registry" }}
+<script src="{% static 'js/desktop/window-manager.js' %}" defer></script>
+{% endblock %}
+
+{% block body %}
+<main class="desktop-shell" x-data="desktopOS()" x-init="boot()">
+  <div class="boot-screen" data-boot-screen>
+    <div class="boot-box">
+      <div class="boot-logo"></div>
+      <div class="boot-title">BornAgain OS</div>
+      <div class="boot-subtitle">restoring previous session...</div>
+      <div class="boot-progress"><span></span></div>
+      <div class="boot-lines">
+        <span>Reading sector 0x3F... ok</span>
+        <span>Recovering deleted_letters/ ... 7 found</span>
+        <span>Linking memories.dll ... corrupted</span>
+        <span>Starting MS-DOS.exe</span>
+      </div>
+    </div>
+  </div>
+  <div class="crt-overlay" aria-hidden="true"></div>
+  <div class="desktop-noise" aria-hidden="true"></div>
+  <div class="crt-sweep" aria-hidden="true"></div>
+  <div class="crt-vignette" aria-hidden="true"></div>
+
+  <section class="desktop-area" @pointerdown="clearFocus($event)">
+    {% include "desktop/components/icon_grid.html" %}
+    <div class="ambient-note note-a">do not align icons</div>
+    <div class="ambient-note note-b">last login: 03:17</div>
+    <div class="ambient-note note-c">~ system breathing</div>
+
+    <template x-for="win in windows" :key="win.id">
+      {% include "desktop/components/window.html" %}
+    </template>
+
+    <template x-for="popup in popups" :key="popup.id">
+      {% include "desktop/components/popup.html" %}
+    </template>
+  </section>
+
+  {% include "desktop/components/taskbar.html" %}
+</main>
+{% endblock %}

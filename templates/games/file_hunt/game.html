@@ -1,0 +1,49 @@
+<div class="file-hunt" x-data="fileHuntGame()" x-init="init()">
+  <header class="game-status">
+    <div><strong>Level</strong> <span x-text="level"></span></div>
+    <div><strong>Time</strong> <span x-text="timeLeft"></span>s</div>
+    <div><strong>Score</strong> <span x-text="score"></span></div>
+    <button type="button" @click="restartEasy()">Restart</button>
+  </header>
+
+  <div class="file-hunt-brief" x-text="brief"></div>
+
+  <section class="hunt-desktop" :class="{ lagging: lagging, dragging: !!dragging }">
+    <template x-for="file in files" :key="file.id">
+      <button
+        class="hunt-file"
+        type="button"
+        :class="[file.kind, file.anomaly ? 'is-anomaly' : '', file.decoy ? 'is-decoy' : '']"
+        :style="`left:${file.x}%; top:${file.y}%; transform:translate(${file.dx}px, ${file.dy}px) rotate(${file.r}deg); z-index:${file.z}`"
+        @click="pick(file)"
+        @pointerdown.stop="startFileDrag($event, file)"
+        @mouseenter="evade(file)"
+      >
+        <span class="hunt-file-icon"></span>
+        <span class="hunt-file-name" x-text="file.name"></span>
+      </button>
+    </template>
+
+    <template x-for="d in distractions" :key="d.id">
+      <aside class="hunt-distraction" :style="`left:${d.x}%; top:${d.y}%;`">
+        <b x-text="d.title"></b>
+        <span x-text="d.text"></span>
+      </aside>
+    </template>
+
+    <aside class="hunt-complete-prompt" x-show="promptOpen" x-transition>
+      <header>FILE_HUNT.EXE</header>
+      <div class="prompt-body">
+        <p>Easy mode complete.</p>
+        <p>Фрагмент кода: <strong x-text="codeFragment"></strong></p>
+        <p class="muted">Позже этот фрагмент станет частью общего кода для командной строки.</p>
+      </div>
+      <footer>
+        <button type="button" @click="continueAfterEasy()">Continue</button>
+        <button type="button" @click="stopAfterEasy()">No</button>
+      </footer>
+    </aside>
+  </section>
+
+  <footer class="game-message" x-text="message"></footer>
+</div>
